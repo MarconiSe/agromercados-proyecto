@@ -44,6 +44,8 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+await DataSeeder.SeedRolesAsync(app.Services);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
