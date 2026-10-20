@@ -65,6 +65,7 @@ function configurarNavegacion() {
         if (tieneRol("Admin")) {
             navAdmin.hidden = false;
             navPedidos.hidden = true;
+            document.querySelector("#nav-carrito").hidden = true;
         }
 
     } else {
@@ -96,48 +97,69 @@ function agregarProducto(producto) {
 function renderProductos(productos) {
     contenedor.innerHTML = "";
 
-    productos
-        .filter(producto => producto.disponible)
-        .forEach(producto => {
+    const disponibles =
+        productos.filter(producto => producto.disponible);
 
-            const card =
-                document.createElement("article");
+    const categorias = [
+        ...new Set(
+            disponibles.map(producto => producto.categoria)
+        )
+    ];
 
-            card.className = "product-card";
+    categorias.forEach(categoria => {
 
-            card.innerHTML = `
-                <div class="product-image">
-                    ${producto.nombre.charAt(0)}
-                </div>
+        const titulo =
+            document.createElement("h2");
 
-                <h2>${producto.nombre}</h2>
+        titulo.className = "seccion";
+        titulo.textContent = categoria;
 
-                <p>
-                    ${producto.descripcion}
-                </p>
+        const grid =
+            document.createElement("div");
 
-                <p class="category">
-                    ${producto.categoria}
-                </p>
+        grid.className = "product-grid";
 
-                <strong>
-                    $${producto.precio.toFixed(2)}
-                </strong>
+        disponibles
+            .filter(producto => producto.categoria === categoria)
+            .forEach(producto => {
 
-                <button class="btn primary">
-                    Agregar
-                </button>
-            `;
+                const card =
+                    document.createElement("article");
 
-            card
-                .querySelector("button")
-                .addEventListener(
-                    "click",
-                    () => agregarProducto(producto)
-                );
+                card.className = "product-card";
 
-            contenedor.appendChild(card);
-        });
+                card.innerHTML = `
+                    <div class="product-image">
+                        ${producto.nombre.charAt(0)}
+                    </div>
+
+                    <span>${producto.nombre}</span>
+
+                    <small>
+                        ${producto.descripcion}
+                    </small>
+
+                    <strong>
+                        $${producto.precio.toFixed(2)}
+                    </strong>
+
+                    <button class="btn primary small">
+                        Agregar
+                    </button>
+                `;
+
+                card
+                    .querySelector("button")
+                    .addEventListener(
+                        "click",
+                        () => agregarProducto(producto)
+                    );
+
+                grid.appendChild(card);
+            });
+
+        contenedor.append(titulo, grid);
+    });
 }
 
 async function cargarProductos() {

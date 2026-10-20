@@ -9,7 +9,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Agromercados</title>
+    <title>AgroYa</title>
 
     <link
         rel="stylesheet"
@@ -27,14 +27,12 @@
 
     <header class="header">
 
-        <a href="./index.html" class="logo">
-            AGROMERCADOS
-        </a>
+        <a href="./index.html" class="logo"><span class="agro">Agro</span><span class="ya">Ya</span></a>
 
         <nav class="nav">
 
             <a href="./index.html">
-                Productos
+                <u>Productos</u>
             </a>
 
             <a
@@ -42,6 +40,13 @@
                 href="./mis-pedidos.html"
             >
                 Mis pedidos
+            </a>
+
+            <a
+                id="nav-carrito"
+                href="./pedido.html"
+            >
+                Carrito (<span id="cart-count">0</span>)
             </a>
 
             <a
@@ -73,29 +78,7 @@
 
     <main class="container">
 
-        <div class="page-title">
-
-            <div>
-                <h1>Productos disponibles</h1>
-                <p>
-                    Selecciona los productos para tu pedido.
-                </p>
-            </div>
-
-            <a
-                href="./pedido.html"
-                class="btn primary"
-            >
-                Ver pedido
-                (<span id="cart-count">0</span>)
-            </a>
-
-        </div>
-
-        <section
-            id="productos"
-            class="product-grid"
-        ></section>
+        <section id="productos"></section>
 
         <p
             id="mensaje"

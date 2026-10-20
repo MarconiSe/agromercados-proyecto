@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Registro | Agromercados</title>
+    <title>Registro | AgroYa</title>
 
     <link
         rel="stylesheet"
@@ -23,46 +23,34 @@
 
 <body>
 
-    <header class="header">
-        <a href="./index.html" class="logo">
-            AGROMERCADOS
-        </a>
-    </header>
-
     <main class="form-page">
 
         <section class="form-card">
 
-            <h1>Crear cuenta</h1>
+            <a href="./index.html" class="logo"><span class="agro">Agro</span><span class="ya">Ya</span></a>
 
             <form id="registro-form">
 
-                <label for="nombre">
-                    Nombre
-                </label>
-
                 <input
                     id="nombre"
+                    placeholder="Nombre"
+                    aria-label="Nombre"
                     required
                 >
-
-                <label for="email">
-                    Correo
-                </label>
 
                 <input
                     id="email"
                     type="email"
+                    placeholder="Correo"
+                    aria-label="Correo"
                     required
                 >
-
-                <label for="password">
-                    Contraseña
-                </label>
 
                 <input
                     id="password"
                     type="password"
+                    placeholder="Contraseña"
+                    aria-label="Contraseña"
                     required
                 >
 
@@ -70,7 +58,7 @@
                     class="btn primary"
                     type="submit"
                 >
-                    Crear cuenta
+                    Crear Usuario
                 </button>
 
             </form>
@@ -81,9 +69,9 @@
             ></p>
 
             <p>
-                ¿Ya tienes cuenta?
+                ¿Ya tienes cuenta?<br>
                 <a href="./login.html">
-                    Iniciar sesión
+                    Ingresar
                 </a>
             </p>
 
