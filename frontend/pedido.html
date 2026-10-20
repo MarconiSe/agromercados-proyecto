@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mi pedido | Agromercados</title>
+
+    <link
+        rel="stylesheet"
+        href="./src/style/base.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="./src/style/forms.css"
+    >
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <a href="./index.html" class="logo">
+            AGROMERCADOS
+        </a>
+
+        <nav class="nav">
+            <a href="./index.html">
+                Productos
+            </a>
+
+            <a href="./mis-pedidos.html">
+                Mis pedidos
+            </a>
+        </nav>
+
+    </header>
+
+    <main class="container narrow">
+
+        <h1>Mi pedido</h1>
+
+        <section id="carrito"></section>
+
+        <div class="total-box">
+            Total:
+            <strong id="total">$0.00</strong>
+        </div>
+
+        <form id="pedido-form">
+
+            <label for="agromercado">
+                Lugar de retiro
+            </label>
+
+            <select
+                id="agromercado"
+                required
+            ></select>
+
+            <label for="fecha">
+                Fecha
+            </label>
+
+            <input
+                id="fecha"
+                type="date"
+                required
+            >
+
+            <label for="horario">
+                Horario
+            </label>
+
+            <select
+                id="horario"
+                required
+            ></select>
+
+            <button
+                type="submit"
+                class="btn primary"
+            >
+                Confirmar pedido
+            </button>
+
+        </form>
+
+        <p
+            id="mensaje"
+            class="mensaje"
+        ></p>
+
+    </main>
+
+    <script
+        type="module"
+        src="./src/pedido.js"
+    ></script>
+
+</body>
+</html>

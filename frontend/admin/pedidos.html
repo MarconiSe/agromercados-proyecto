@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Pedidos</title>
+
+    <link
+        rel="stylesheet"
+        href="../src/style/base.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../src/style/admin.css"
+    >
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <a href="../index.html" class="logo">
+            AGROMERCADOS ADMIN
+        </a>
+
+        <nav class="nav">
+
+            <a href="./productos.html">
+                Productos
+            </a>
+
+            <a href="./pedidos.html">
+                Pedidos
+            </a>
+
+            <button
+                id="logout"
+                class="link-button"
+            >
+                Cerrar sesión
+            </button>
+
+        </nav>
+
+    </header>
+
+    <main class="container">
+
+        <h1>Administrar pedidos</h1>
+
+        <section id="pedidos"></section>
+
+        <p
+            id="mensaje"
+            class="mensaje"
+        ></p>
+
+    </main>
+
+    <script
+        type="module"
+        src="../src/admin-pedidos.js"
+    ></script>
+
+</body>
+</html>
