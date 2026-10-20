@@ -1,12 +1,20 @@
 import { apiFetch } from "./api.js";
 
 import {
-    requerirRol
+    requerirRol,
+    cerrarSesion
 } from "./auth.js";
 
 if (!requerirRol("Cliente", "./login.html")) {
     throw new Error("Rol Cliente requerido.");
 }
+
+document
+    .querySelector("#logout")
+    .addEventListener(
+        "click",
+        () => cerrarSesion("./login.html")
+    );
 
 const contenedor =
     document.querySelector("#pedidos");
