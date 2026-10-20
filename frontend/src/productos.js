@@ -130,7 +130,10 @@ function renderProductos(productos) {
 
                 card.innerHTML = `
                     <div class="product-image">
-                        ${producto.nombre.charAt(0)}
+                        <img
+                            src="./img/${producto.imagenUrl}"
+                            alt="${producto.nombre}"
+                        >
                     </div>
 
                     <span>${producto.nombre}</span>
@@ -147,6 +150,15 @@ function renderProductos(productos) {
                         Agregar
                     </button>
                 `;
+
+                card
+                    .querySelector("img")
+                    .addEventListener(
+                        "error",
+                        event => event.target.replaceWith(
+                            producto.nombre.charAt(0)
+                        )
+                    );
 
                 card
                     .querySelector("button")
