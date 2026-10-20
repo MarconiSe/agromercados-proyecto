@@ -2,7 +2,8 @@ import { apiFetch } from "./api.js";
 
 import {
     requerirSesion,
-    tieneRol
+    tieneRol,
+    cerrarSesion
 } from "./auth.js";
 
 if (!requerirSesion("./login.html")) {
@@ -13,6 +14,13 @@ if (!tieneRol("Cliente")) {
     window.location.href =
         "./admin/pedidos.html";
 }
+
+document
+    .querySelector("#logout")
+    .addEventListener(
+        "click",
+        () => cerrarSesion("./login.html")
+    );
 
 const carritoContainer =
     document.querySelector("#carrito");
