@@ -58,3 +58,13 @@ th {
         flex-direction: column;
     }
 }
+
+.logo small {
+    font-size: 0.9rem;
+    font-weight: normal;
+    color: #555;
+}
+
+.admin-grid .form-card {
+    background: #f0f0f0;
+}

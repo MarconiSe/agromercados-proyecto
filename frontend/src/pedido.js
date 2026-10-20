@@ -97,21 +97,21 @@ function renderCarrito() {
         fila.className = "cart-row";
 
         fila.innerHTML = `
-            <div>
-                <strong>${item.nombre}</strong>
-                <div>
-                    $${item.precio.toFixed(2)}
-                </div>
-            </div>
+            <span>${item.nombre}</span>
 
             <input
                 type="number"
                 min="1"
                 value="${item.cantidad}"
+                aria-label="Cantidad"
             >
 
+            <span>
+                $${(item.precio * item.cantidad).toFixed(2)}
+            </span>
+
             <button
-                class="btn danger small"
+                class="link-button"
                 type="button"
             >
                 Quitar

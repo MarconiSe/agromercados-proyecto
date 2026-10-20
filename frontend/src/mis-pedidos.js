@@ -24,12 +24,14 @@ const mensaje =
 
 function formatearFecha(fecha) {
     return new Date(fecha)
-        .toLocaleString(
+        .toLocaleDateString("es-SV");
+}
+
+function formatearHora(fecha) {
+    return new Date(fecha)
+        .toLocaleTimeString(
             "es-SV",
-            {
-                dateStyle: "medium",
-                timeStyle: "short"
-            }
+            { timeStyle: "short" }
         );
 }
 
@@ -64,40 +66,27 @@ function renderPedidos(pedidos) {
             .join("");
 
         card.innerHTML = `
-            <div class="order-header">
-                <div>
-                    <strong>
-                        Pedido
-                        ${pedido.id.slice(-6)}
-                    </strong>
+            <h2>
+                Pedido #${pedido.id.slice(-6)}
+            </h2>
 
-                    <div>
-                        ${formatearFecha(
-                            pedido.fechaPedido
-                        )}
-                    </div>
-                </div>
+            <dl class="datos">
+                <dt>Fecha</dt>
+                <dd>${formatearFecha(pedido.fechaHoraRetiro)}</dd>
 
-                <span class="status">
-                    ${pedido.estado}
-                </span>
-            </div>
+                <dt>Total</dt>
+                <dd>$${pedido.total.toFixed(2)}</dd>
 
-            <p>
-                <strong>Retiro:</strong>
-                ${formatearFecha(
-                    pedido.fechaHoraRetiro
-                )}
-            </p>
+                <dt>Retiro</dt>
+                <dd>${formatearHora(pedido.fechaHoraRetiro)}</dd>
 
-            <p>
-                <strong>Total:</strong>
-                $${pedido.total.toFixed(2)}
-            </p>
+                <dt>Estado</dt>
+                <dd>${pedido.estado}</dd>
+            </dl>
 
             <details>
                 <summary>
-                    Ver detalle
+                    VER DETALLE
                 </summary>
 
                 <ul>

@@ -9,7 +9,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Mi pedido | Agromercados</title>
+    <title>Mi pedido | AgroYa</title>
 
     <link
         rel="stylesheet"
@@ -27,9 +27,7 @@
 
     <header class="header">
 
-        <a href="./index.html" class="logo">
-            AGROMERCADOS
-        </a>
+        <a href="./index.html" class="logo"><span class="agro">Agro</span><span class="ya">Ya</span></a>
 
         <nav class="nav">
             <a href="./index.html">
@@ -51,18 +49,22 @@
 
     </header>
 
-    <main class="container narrow">
+    <main class="container pedido-layout">
 
-        <h1>Mi pedido</h1>
+        <section>
 
-        <section id="carrito"></section>
+            <h1>Mi pedido</h1>
 
-        <div class="total-box">
-            Total:
-            <strong id="total">$0.00</strong>
-        </div>
+            <section id="carrito"></section>
 
-        <form id="pedido-form">
+            <div class="total-box">
+                <span>Total</span>
+                <strong id="total">$0.00</strong>
+            </div>
+
+        </section>
+
+        <form id="pedido-form" class="pedido-box">
 
             <label for="agromercado">
                 Lugar de retiro
@@ -84,7 +86,7 @@
             >
 
             <label for="horario">
-                Horario
+                Hora
             </label>
 
             <select
@@ -92,12 +94,20 @@
                 required
             ></select>
 
-            <button
-                type="submit"
-                class="btn primary"
-            >
-                Confirmar pedido
-            </button>
+            <div class="button-row">
+
+                <a href="./index.html" class="regresar">
+                    Regresar
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn primary"
+                >
+                    Confirmar Pedido
+                </button>
+
+            </div>
 
         </form>
 

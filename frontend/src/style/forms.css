@@ -1,5 +1,5 @@
 .form-page {
-    min-height: calc(100vh - 64px);
+    min-height: 100vh;
 
     display: flex;
     align-items: center;
@@ -11,13 +11,20 @@
 .form-card {
     background: white;
 
-    border: 1px solid #ddd;
-    border-radius: 8px;
-
     padding: 28px;
 
     width: 100%;
-    max-width: 460px;
+    max-width: 400px;
+}
+
+.form-page .form-card {
+    text-align: center;
+}
+
+.form-page .logo {
+    display: block;
+    margin-bottom: 30px;
+    font-size: 2.4rem;
 }
 
 form {
@@ -28,7 +35,7 @@ form {
 
 label {
     margin-top: 8px;
-    font-weight: bold;
+    font-size: 0.9rem;
 }
 
 input,
@@ -37,10 +44,21 @@ select {
 
     padding: 10px;
 
-    border: 1px solid #bbb;
-    border-radius: 4px;
+    border: 1px solid #888;
 
     font: inherit;
+}
+
+.form-page .btn {
+    margin-top: 6px;
+}
+
+.form-page p {
+    font-size: 0.9rem;
+}
+
+.form-page p a {
+    font-weight: bold;
 }
 
 .button-row {
@@ -48,4 +66,43 @@ select {
     gap: 10px;
 
     margin-top: 12px;
+}
+
+.pedido-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 50px;
+    align-items: start;
+}
+
+.pedido-box {
+    background: #f0f0f0;
+    padding: 24px;
+    margin-top: 60px;
+}
+
+.pedido-box .button-row {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pedido-box .regresar {
+    margin-top: 0;
+}
+
+.cart-row .link-button {
+    font-size: 0.8rem;
+    text-decoration: underline;
+    color: #b84040;
+}
+
+@media (max-width: 800px) {
+    .pedido-layout {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .pedido-box {
+        margin-top: 0;
+    }
 }
