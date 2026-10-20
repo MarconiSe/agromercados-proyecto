@@ -18,6 +18,7 @@ var mongoDatabase =
 
 builder.Services.AddSingleton(mongoDatabase);
 builder.Services.AddSingleton<ProductoService>();
+builder.Services.AddSingleton<AgromercadoService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
