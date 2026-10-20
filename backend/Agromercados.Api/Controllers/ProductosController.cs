@@ -22,4 +22,17 @@ public class ProductosController : ControllerBase
 
         return Ok(productos);
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Producto>> ObtenerPorId(string id)
+    {
+        var producto = await _productoService.ObtenerPorIdAsync(id);
+
+        if (producto is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(producto);
+    }
 }

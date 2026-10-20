@@ -18,4 +18,11 @@ public class ProductoService
             .Find(_ => true)
             .ToListAsync();
     }
+
+    public async Task<Producto?> ObtenerPorIdAsync(string id)
+    {
+        return await _productos
+            .Find(producto => producto.Id == id)
+            .FirstOrDefaultAsync();
+    }
 }
