@@ -25,4 +25,9 @@ public class ProductoService
             .Find(producto => producto.Id == id)
             .FirstOrDefaultAsync();
     }
+
+    public async Task CrearAsync(Producto producto)
+    {
+        await _productos.InsertOneAsync(producto);
+    }
 }

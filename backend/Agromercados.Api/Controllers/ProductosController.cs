@@ -1,3 +1,4 @@
+using Agromercados.Api.DTOs;
 using Agromercados.Api.Models;
 using Agromercados.Api.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -34,5 +35,23 @@ public class ProductosController : ControllerBase
         }
 
         return Ok(producto);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<Producto>> Crear(CrearProductoDto dto)
+    {
+        var producto = new Producto
+        {
+            Nombre = dto.Nombre,
+            Descripcion = dto.Descripcion,
+            Categoria = dto.Categoria,
+            Precio = dto.Precio,
+            Disponible = dto.Disponible,
+            ImagenUrl = dto.ImagenUrl
+        };
+
+        await _productoService.CrearAsync(producto);
+
+        return StatusCode(201, producto);
     }
 }
