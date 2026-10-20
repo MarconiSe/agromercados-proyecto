@@ -1,6 +1,7 @@
 using Agromercados.Api.DTOs;
 using Agromercados.Api.Models;
 using Agromercados.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Agromercados.Api.Controllers;
@@ -37,6 +38,7 @@ public class ProductosController : ControllerBase
         return Ok(producto);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<Producto>> Crear(CrearProductoDto dto)
     {
@@ -55,6 +57,7 @@ public class ProductosController : ControllerBase
         return StatusCode(201, producto);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<ActionResult<Producto>> Actualizar(
         string id,
@@ -82,6 +85,7 @@ public class ProductosController : ControllerBase
         return Ok(producto);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Eliminar(string id)
     {
