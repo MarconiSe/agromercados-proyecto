@@ -1,19 +1,3 @@
-// usuarios
-db.usuarios.insertOne({
-  nombre: "Carlos Ruiz",
-  email: "carlos@gmail.com",
-  passwordHash: "hash_de_prueba",
-  rol: "Cliente"
-})
-
-db.usuarios.insertOne({
-  nombre: "Administrador",
-  email: "admin@agromercados.com",
-  passwordHash: "hash_admin_prueba",
-  rol: "Admin"
-})
-
-
 // productos
 db.productos.insertMany([
   {

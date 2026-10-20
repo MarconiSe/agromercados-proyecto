@@ -1,9 +1,5 @@
 // use agromercados_db
 
-// VER TODOS LOS USUARIOS
-db.usuarios.find()
-
-
 // VER TODOS LOS PRODUCTOS
 db.productos.find()
 
