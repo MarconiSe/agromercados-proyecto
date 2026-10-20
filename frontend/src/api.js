@@ -56,6 +56,10 @@ export async function apiFetch(
 
         if (data?.mensaje) {
             mensaje = data.mensaje;
+        } else if (data?.errors) {
+            mensaje = Object.values(data.errors)
+                .flat()
+                .join(" ");
         } else if (data?.title) {
             mensaje = data.title;
         } else if (Array.isArray(data)) {
