@@ -1,9 +1,27 @@
+using Agromercados.Api.Data;
+using Agromercados.Api.Models;
 using Agromercados.Api.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// SQL Server + Identity
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("IdentityConnection")
+    )
+);
+
+builder.Services
+    .AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+// MongoDB
 
 var mongoConnectionString =
     builder.Configuration["MongoDB:ConnectionString"];
