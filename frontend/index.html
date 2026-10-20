@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Agromercados</title>
+
+    <link
+        rel="stylesheet"
+        href="./src/style/base.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="./src/style/catalogo.css"
+    >
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <a href="./index.html" class="logo">
+            AGROMERCADOS
+        </a>
+
+        <nav class="nav">
+
+            <a href="./index.html">
+                Productos
+            </a>
+
+            <a
+                id="nav-pedidos"
+                href="./mis-pedidos.html"
+            >
+                Mis pedidos
+            </a>
+
+            <a
+                id="nav-admin"
+                href="./admin/pedidos.html"
+                hidden
+            >
+                Admin
+            </a>
+
+            <a
+                id="nav-login"
+                href="./login.html"
+            >
+                Iniciar sesión
+            </a>
+
+            <button
+                id="nav-logout"
+                class="link-button"
+                hidden
+            >
+                Cerrar sesión
+            </button>
+
+        </nav>
+
+    </header>
+
+    <main class="container">
+
+        <div class="page-title">
+
+            <div>
+                <h1>Productos disponibles</h1>
+                <p>
+                    Selecciona los productos para tu pedido.
+                </p>
+            </div>
+
+            <a
+                href="./pedido.html"
+                class="btn primary"
+            >
+                Ver pedido
+                (<span id="cart-count">0</span>)
+            </a>
+
+        </div>
+
+        <section
+            id="productos"
+            class="product-grid"
+        ></section>
+
+        <p
+            id="mensaje"
+            class="mensaje"
+        ></p>
+
+    </main>
+
+    <script
+        type="module"
+        src="./src/productos.js"
+    ></script>
+
+</body>
+</html>
