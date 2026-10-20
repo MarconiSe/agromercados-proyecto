@@ -13,11 +13,24 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 // SQL Server + Identity
+// En el servidor (1 GB de RAM) SQL Server no cabe, ahí se usa SQLite
+var usarSqlite =
+    builder.Configuration["IdentityProvider"] == "Sqlite";
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("IdentityConnection")
-    )
-);
+{
+    var connectionString =
+        builder.Configuration.GetConnectionString("IdentityConnection");
+
+    if (usarSqlite)
+    {
+        options.UseSqlite(connectionString);
+    }
+    else
+    {
+        options.UseSqlServer(connectionString);
+    }
+});
 
 builder.Services
     .AddIdentity<ApplicationUser, ApplicationRole>()
@@ -93,6 +106,16 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+if (usarSqlite)
+{
+    // Las migraciones son de SQL Server; en SQLite se crea el esquema desde el modelo
+    using var scope = app.Services.CreateScope();
+
+    scope.ServiceProvider
+        .GetRequiredService<ApplicationDbContext>()
+        .Database.EnsureCreated();
+}
 
 await DataSeeder.SeedRolesAsync(app.Services);
 

@@ -45,10 +45,13 @@ public static class DataSeeder
                 UserName = adminEmail
             };
 
+            var configuration =
+                scope.ServiceProvider.GetRequiredService<IConfiguration>();
+
             var resultado =
                 await userManager.CreateAsync(
                     admin,
-                    "Admin123!"
+                    configuration["Admin:Password"] ?? "Admin123!"
                 );
 
             if (resultado.Succeeded)
