@@ -12,6 +12,10 @@ public static class DataSeeder
         var roleManager =
             scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
+        var userManager =
+            scope.ServiceProvider
+                .GetRequiredService<UserManager<ApplicationUser>>();
+
         string[] roles = { "Cliente", "Admin" };
 
         foreach (var rol in roles)
@@ -23,6 +27,35 @@ public static class DataSeeder
                     {
                         Name = rol
                     }
+                );
+            }
+        }
+
+        var adminEmail = "admin@agromercados.com";
+
+        var admin =
+            await userManager.FindByEmailAsync(adminEmail);
+
+        if (admin is null)
+        {
+            admin = new ApplicationUser
+            {
+                Nombre = "Administrador",
+                Email = adminEmail,
+                UserName = adminEmail
+            };
+
+            var resultado =
+                await userManager.CreateAsync(
+                    admin,
+                    "Admin123!"
+                );
+
+            if (resultado.Succeeded)
+            {
+                await userManager.AddToRoleAsync(
+                    admin,
+                    "Admin"
                 );
             }
         }
