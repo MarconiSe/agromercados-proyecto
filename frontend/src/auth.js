@@ -40,6 +40,7 @@ export function tieneRol(rol) {
 export function cerrarSesion(redireccion = "/login.html") {
     sessionStorage.removeItem(TOKEN_KEY);
     sessionStorage.removeItem(USER_KEY);
+    sessionStorage.removeItem("carrito");
 
     window.location.href = redireccion;
 }

@@ -10,12 +10,19 @@
     align-items: start;
 }
 
+.admin-grid > section {
+    min-width: 0;
+}
+
 table {
     width: 100%;
 
     border-collapse: collapse;
 
     background: white;
+
+    display: block;
+    overflow-x: auto;
 }
 
 th,
