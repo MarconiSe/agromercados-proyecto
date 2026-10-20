@@ -54,4 +54,31 @@ public class ProductosController : ControllerBase
 
         return StatusCode(201, producto);
     }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<Producto>> Actualizar(
+        string id,
+        ActualizarProductoDto dto)
+    {
+        var producto = new Producto
+        {
+            Id = id,
+            Nombre = dto.Nombre,
+            Descripcion = dto.Descripcion,
+            Categoria = dto.Categoria,
+            Precio = dto.Precio,
+            Disponible = dto.Disponible,
+            ImagenUrl = dto.ImagenUrl
+        };
+
+        var actualizado =
+            await _productoService.ActualizarAsync(id, producto);
+
+        if (!actualizado)
+        {
+            return NotFound();
+        }
+
+        return Ok(producto);
+    }
 }

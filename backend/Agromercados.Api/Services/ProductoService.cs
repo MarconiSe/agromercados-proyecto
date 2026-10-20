@@ -30,4 +30,14 @@ public class ProductoService
     {
         await _productos.InsertOneAsync(producto);
     }
+
+    public async Task<bool> ActualizarAsync(string id, Producto producto)
+    {
+        var resultado = await _productos.ReplaceOneAsync(
+            productoExistente => productoExistente.Id == id,
+            producto
+        );
+
+        return resultado.MatchedCount > 0;
+    }
 }
