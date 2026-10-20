@@ -95,6 +95,13 @@ public class PedidoService
             .ToListAsync();
     }
 
+    public async Task<Pedido?> ObtenerPorIdAsync(string id)
+    {
+        return await _pedidos
+            .Find(pedido => pedido.Id == id)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<List<Pedido>> ObtenerTodosAsync()
     {
         return await _pedidos

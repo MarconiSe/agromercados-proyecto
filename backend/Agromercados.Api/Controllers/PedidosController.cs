@@ -74,6 +74,34 @@ public class PedidosController : ControllerBase
         return Ok(pedidos);
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Pedido>> ObtenerPorId(string id)
+    {
+        var pedido =
+            await _pedidoService.ObtenerPorIdAsync(id);
+
+        if (pedido is null)
+        {
+            return NotFound();
+        }
+
+        var usuarioId =
+            User.FindFirstValue(
+                ClaimTypes.NameIdentifier
+            );
+
+        var esAdmin =
+            User.IsInRole("Admin");
+
+        if (!esAdmin &&
+            pedido.UsuarioId != usuarioId)
+        {
+            return Forbid();
+        }
+
+        return Ok(pedido);
+    }
+
     [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<List<Pedido>>>
