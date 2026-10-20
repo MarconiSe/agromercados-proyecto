@@ -81,4 +81,20 @@ public class ProductosController : ControllerBase
 
         return Ok(producto);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Eliminar(string id)
+    {
+        var eliminado = await _productoService.EliminarAsync(id);
+
+        if (!eliminado)
+        {
+            return NotFound();
+        }
+
+        return Ok(new
+        {
+            mensaje = "Producto eliminado correctamente"
+        });
+    }
 }

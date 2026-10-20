@@ -40,4 +40,13 @@ public class ProductoService
 
         return resultado.MatchedCount > 0;
     }
+
+    public async Task<bool> EliminarAsync(string id)
+    {
+        var resultado = await _productos.DeleteOneAsync(
+            producto => producto.Id == id
+        );
+
+        return resultado.DeletedCount > 0;
+    }
 }
