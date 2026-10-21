@@ -2,7 +2,7 @@
     display: grid;
 
     grid-template-columns:
-        repeat(auto-fill, minmax(170px, 1fr));
+        repeat(auto-fill, minmax(200px, 1fr));
 
     gap: 20px;
 
@@ -14,7 +14,19 @@
     flex-direction: column;
     gap: 6px;
 
+    background: white;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    padding: 14px;
+
     font-size: 0.9rem;
+}
+
+.product-card span {
+    font-size: 1.1rem;
+    font-weight: bold;
 }
 
 .product-image {
@@ -44,6 +56,5 @@
 }
 
 .product-card .btn {
-    margin-top: 4px;
-    align-self: flex-start;
+    margin-top: auto;
 }
