@@ -1,0 +1,42 @@
+name: Desplegar en Lightsail
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency: deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      HOST: bitnami@54.210.70.73
+      DESTINO: /home/bitnami/agroya
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Publicar API
+        run: dotnet publish backend/Agromercados.Api -c Release -r linux-x64 --self-contained true -o publish/api
+
+      - name: Configurar SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.LIGHTSAIL_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "54.210.70.73 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDFLIN+lS/Z7kF/jTbG1Yd4twgHTt7O7k8thxVNmh5iB" > ~/.ssh/known_hosts
+
+      # appsettings.Production.json y data/ (usuarios) viven solo en el servidor y no se tocan
+      - name: Subir y reiniciar
+        run: |
+          ssh $HOST "sudo systemctl stop agroya-api"
+          tar -C publish/api -czf - . | ssh $HOST "tar -C $DESTINO/api -xzf -"
+          tar -C frontend -czf - . | ssh $HOST "tar -C $DESTINO/frontend -xzf -"
+          tar -C database -czf - . | ssh $HOST "tar -C $DESTINO/database -xzf -"
+          ssh $HOST "sudo systemctl start agroya-api && sleep 5 && curl -sf http://127.0.0.1:5000/api/productos > /dev/null && echo API OK"
