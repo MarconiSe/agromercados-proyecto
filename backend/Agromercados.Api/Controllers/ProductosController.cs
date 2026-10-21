@@ -3,6 +3,7 @@ using Agromercados.Api.Models;
 using Agromercados.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace Agromercados.Api.Controllers;
 
@@ -49,7 +50,7 @@ public class ProductosController : ControllerBase
             Categoria = dto.Categoria,
             Precio = dto.Precio,
             Disponible = dto.Disponible,
-            ImagenUrl = dto.ImagenUrl
+            ImagenUrl = NormalizarImagen(dto.ImagenUrl)
         };
 
         await _productoService.CrearAsync(producto);
@@ -71,7 +72,7 @@ public class ProductosController : ControllerBase
             Categoria = dto.Categoria,
             Precio = dto.Precio,
             Disponible = dto.Disponible,
-            ImagenUrl = dto.ImagenUrl
+            ImagenUrl = NormalizarImagen(dto.ImagenUrl)
         };
 
         var actualizado =
@@ -100,5 +101,27 @@ public class ProductosController : ControllerBase
         {
             mensaje = "Producto eliminado correctamente"
         });
+    }
+
+    // Convierte un enlace de Pexels (pagina o imagen) en la version
+    // de 400x300 comprimida, para no cargar la foto en alta resolucion.
+    // Otros enlaces y nombres de archivo se guardan tal cual.
+    private static string NormalizarImagen(string? imagenUrl)
+    {
+        var url = imagenUrl?.Trim() ?? string.Empty;
+
+        var match = Regex.Match(
+            url,
+            @"^https?://(www\.|images\.)?pexels\.com/.*?(\d+)(/|\.jpe?g|\?|$)");
+
+        if (!match.Success)
+        {
+            return url;
+        }
+
+        var id = match.Groups[2].Value;
+
+        return $"https://images.pexels.com/photos/{id}/pexels-photo-{id}.jpeg"
+            + "?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop";
     }
 }
