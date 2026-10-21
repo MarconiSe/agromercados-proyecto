@@ -56,6 +56,16 @@ a {
     text-decoration: none;
 }
 
+#nav-carrito {
+    background: #d71920;
+    color: white;
+
+    padding: 8px 14px;
+    border-radius: 20px;
+
+    font-weight: bold;
+}
+
 .link-button {
     border: 0;
     background: transparent;
@@ -104,7 +114,7 @@ main h1::before,
     display: inline-block;
 
     border: 0;
-    border-radius: 5px;
+    border-radius: 8px;
 
     padding: 10px 16px;
 
@@ -113,7 +123,7 @@ main h1::before,
 }
 
 .btn.primary {
-    background: #222;
+    background: #d71920;
     color: white;
 }
 
@@ -140,8 +150,8 @@ main h1::before,
 .admin-order {
     background: white;
 
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
     padding: 20px;
     margin-bottom: 16px;
@@ -223,6 +233,10 @@ main h1::before,
     border-top: 1px solid #999;
     padding-top: 12px;
     margin: 20px 0;
+}
+
+.total-box strong {
+    color: #d71920;
 }
 
 @media (max-width: 650px) {

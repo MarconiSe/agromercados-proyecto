@@ -11,8 +11,8 @@
 .form-card {
     background: white;
 
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
     padding: 28px;
 
@@ -48,9 +48,15 @@ select {
     padding: 10px;
 
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
 
     font: inherit;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #f26a21;
+    border-color: transparent;
 }
 
 .form-page .btn {
@@ -83,8 +89,8 @@ select {
 .pedido-box {
     background: white;
 
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
     padding: 24px;
 }
