@@ -11,6 +11,9 @@
 .form-card {
     background: white;
 
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
     padding: 28px;
 
     width: 100%;
@@ -44,7 +47,8 @@ select {
 
     padding: 10px;
 
-    border: 1px solid #888;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 
     font: inherit;
 }
@@ -75,10 +79,18 @@ select {
     align-items: start;
 }
 
+.pedido-layout > section,
 .pedido-box {
-    background: #f0f0f0;
+    background: white;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
     padding: 24px;
-    margin-top: 60px;
+}
+
+.pedido-layout h1 {
+    margin-top: 0;
 }
 
 .pedido-box .button-row {
@@ -99,10 +111,6 @@ select {
 @media (max-width: 800px) {
     .pedido-layout {
         grid-template-columns: 1fr;
-        gap: 0;
-    }
-
-    .pedido-box {
-        margin-top: 0;
+        gap: 20px;
     }
 }

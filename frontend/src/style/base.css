@@ -9,8 +9,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: white;
-    color: #333;
+    background: #f5f5f2;
+    color: #222;
 }
 
 a {
@@ -26,6 +26,7 @@ a {
     justify-content: space-between;
 
     background: white;
+    border-bottom: 1px solid #ddd;
 }
 
 .logo {
@@ -65,26 +66,31 @@ a {
 
 .container {
     width: min(1100px, 92%);
-    margin: 20px auto 40px;
+    margin: 32px auto 40px;
 }
 
 .narrow {
     max-width: 760px;
 }
 
-main h1,
 .seccion {
     font-weight: normal;
     color: #444;
 }
 
 main h1 {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+}
+
+.page-title p {
+    margin-top: -10px;
+    color: #666;
 }
 
 main h1::before,
 .seccion::before {
     content: "• ";
+    color: #f26a21;
 }
 
 .order-header {
@@ -98,6 +104,7 @@ main h1::before,
     display: inline-block;
 
     border: 0;
+    border-radius: 5px;
 
     padding: 10px 16px;
 
@@ -106,7 +113,7 @@ main h1::before,
 }
 
 .btn.primary {
-    background: #505050;
+    background: #222;
     color: white;
 }
 
@@ -131,7 +138,11 @@ main h1::before,
 
 .order-card,
 .admin-order {
-    background: #f0f0f0;
+    background: white;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
     padding: 20px;
     margin-bottom: 16px;
 }
@@ -185,8 +196,9 @@ main h1::before,
 }
 
 .status {
-    background: #ddd;
+    background: #eee;
     padding: 6px 12px;
+    border-radius: 20px;
 }
 
 .cart-row {
@@ -195,7 +207,8 @@ main h1::before,
     align-items: center;
     gap: 12px;
 
-    padding: 6px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
     font-size: 0.9rem;
 }
 
