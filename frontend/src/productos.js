@@ -130,10 +130,7 @@ function renderProductos(productos) {
 
                 card.innerHTML = `
                     <div class="product-image">
-                        <img
-                            src="./img/${producto.imagenUrl}"
-                            alt="${producto.nombre}"
-                        >
+                        <img alt="${producto.nombre}">
                     </div>
 
                     <span>${producto.nombre}</span>
@@ -150,6 +147,12 @@ function renderProductos(productos) {
                         Agregar
                     </button>
                 `;
+
+                // Si es un enlace se usa directo; si no, es un archivo de img/
+                card.querySelector("img").src =
+                    producto.imagenUrl?.startsWith("http")
+                        ? producto.imagenUrl
+                        : `./img/${producto.imagenUrl}`;
 
                 card
                     .querySelector("img")
