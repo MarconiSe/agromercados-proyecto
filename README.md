@@ -1,122 +1,98 @@
-# Sistema de pedidos para Agromercados
+# Agromercados – online ordering API
 
-Proyecto académico desarrollado para las materias de
-Programación Web y Base de Datos II.
+REST API and web front end for ordering produce from government farmers'
+markets ("Agromercados") in El Salvador and picking the order up in a chosen
+time slot. Built as a university project (Web Programming and Database II) and
+deployed to a real server.
 
-El sistema permite consultar productos disponibles,
-realizar pedidos en línea y seleccionar un horario para
-retirar la compra en un Agromercado.
+**Live demo:** https://agroya.54.210.70.73.sslip.io/  
+**API example:** `GET https://agroya.54.210.70.73.sslip.io/api/productos`
 
-## Tecnologías
+Spanish version: [README.es.md](README.es.md) · Endpoint reference (Spanish): [docs/API.md](docs/API.md)
 
-- C#
-- ASP.NET Core Web API
-- ASP.NET Core Identity
-- Entity Framework Core
-- SQL Server LocalDB
-- JWT
-- MongoDB
-- MongoDB.Driver
-- Postman
+## What it does
 
-## Bases de datos
+- Customers register, log in, browse products and markets, place an order with
+  a pickup time and follow its status.
+- Admins manage the product catalog and move orders through
+  `Pendiente → Confirmado → Listo para retirar → Entregado`.
+- Order lines store a **snapshot** of the product name and price at purchase
+  time, so later price changes never rewrite history.
 
-### MongoDB
+## Stack
 
-Base: `agromercados_db`
+| Layer | Technology |
+|---|---|
+| API | C#, ASP.NET Core Web API (.NET 10), controllers + services + DTOs |
+| Auth | ASP.NET Core Identity, JWT bearer tokens, `Cliente` / `Admin` roles |
+| Relational data | Entity Framework Core migrations (Identity). SQL Server LocalDB in development, SQLite in production |
+| Document data | MongoDB (`productos`, `agromercados`, `pedidos`) with the official driver |
+| Front end | Static HTML/CSS/vanilla JS served by the same host |
+| CI/CD | GitHub Actions → build self-contained `linux-x64` → deploy over SSH → systemd |
+| Hosting | AWS Lightsail (Bitnami/Apache reverse proxy, TLS with Let's Encrypt) |
 
-Colecciones:
+## Design decisions
 
-- productos
-- agromercados
-- pedidos
+- **Two databases on purpose.** Users and roles live in a relational store
+  (Identity); the catalog and orders are documents, which fits the order
+  snapshot model. `database/` contains the Mongo scripts for collections, seed
+  data and aggregation queries (orders per status, total value).
+- **SQLite in production.** The production server has 1 GB of RAM, which is not
+  enough for SQL Server, so the app switches provider with the
+  `IdentityProvider` setting. Same migrations, different provider.
+- **Authorization at the endpoint level.** Customers can only read their own
+  orders; admin-only routes are marked in [docs/API.md](docs/API.md).
+- **Environment-specific config stays on the server.** Production settings and
+  the user database are not part of the deployment bundle.
 
-MongoDB almacena la información principal del sistema.
+## Main endpoints
 
-Los pedidos utilizan snapshots históricos para conservar
-el nombre y precio de los productos al momento de realizar
-el pedido.
+| Area | Endpoints |
+|---|---|
+| Auth | `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me` |
+| Products | `GET /api/productos`, `GET /api/productos/{id}`; `POST/PUT/DELETE` for admins |
+| Markets | `GET /api/agromercados`, `GET /api/agromercados/{id}` |
+| Orders | `POST /api/pedidos`, `GET /api/pedidos/mis-pedidos`, `GET /api/pedidos/{id}`; admins: `GET /api/pedidos`, `PUT /api/pedidos/{id}/estado` |
 
-### SQL Server
+## Run it locally
 
-Base: `AgromercadosIdentityDb`
+Requirements: .NET 10 SDK, MongoDB on `localhost:27017`, SQL Server LocalDB
+(or set `IdentityProvider` to `Sqlite`).
 
-ASP.NET Core Identity administra:
+```bash
+# 1. Mongo collections and sample data
+mongosh agromercados_db database/crear_colecciones.js
+mongosh agromercados_db database/datos_prueba.js
 
-- usuarios
-- contraseñas
-- roles
-- relaciones usuario-rol
+# 2. Identity database
+cd backend/Agromercados.Api
+dotnet ef database update
 
-## Roles
+# 3. Run the API (serves on the port shown in the console)
+dotnet run
+```
 
-### Cliente
+Set your own signing key for development instead of relying on the sample one:
 
-Puede:
+```bash
+dotnet user-secrets set "Jwt:Key" "<at least 32 random characters>"
+```
 
-- Registrarse
-- Iniciar sesión
-- Consultar productos
-- Consultar Agromercados
-- Crear pedidos
-- Consultar sus propios pedidos
+The front end is in `frontend/`. `frontend/src/config.js` points to
+`http://localhost:5132` when opened from localhost and to the same origin when
+deployed.
 
-### Admin
+## Repository layout
 
-Puede:
+```
+backend/Agromercados.Api   Controllers, Services, DTOs, Models, EF migrations
+database/                  MongoDB scripts (collections, seed data, queries, aggregations)
+frontend/                  Static pages and JS modules (catalog, cart, admin screens)
+docs/API.md                Endpoint reference
+.github/workflows          Build and deploy pipeline
+```
 
-- Crear productos
-- Actualizar productos
-- Eliminar productos
-- Consultar todos los pedidos
-- Consultar el detalle de pedidos
-- Cambiar el estado de los pedidos
+## Status
 
-## Estados de pedido
-
-- Pendiente
-- Confirmado
-- Listo para retirar
-- Entregado
-
-## Endpoints principales
-
-### Autenticación
-
-- POST `/api/auth/register`
-- POST `/api/auth/login`
-- GET `/api/auth/me`
-
-### Productos
-
-- GET `/api/productos`
-- GET `/api/productos/{id}`
-- POST `/api/productos` - Admin
-- PUT `/api/productos/{id}` - Admin
-- DELETE `/api/productos/{id}` - Admin
-
-### Agromercados
-
-- GET `/api/agromercados`
-- GET `/api/agromercados/{id}`
-
-### Pedidos
-
-- POST `/api/pedidos` - Cliente
-- GET `/api/pedidos/mis-pedidos` - Cliente
-- GET `/api/pedidos/{id}` - Cliente propietario o Admin
-- GET `/api/pedidos` - Admin
-- PUT `/api/pedidos/{id}/estado` - Admin
-
-## Flujo principal
-
-1. El cliente se registra.
-2. Inicia sesión y recibe un JWT.
-3. Consulta productos y Agromercados.
-4. Selecciona productos, cantidades y horario de retiro.
-5. La API crea el pedido.
-6. El precio y nombre de los productos se guardan como
-   snapshot histórico.
-7. El administrador consulta los pedidos.
-8. El administrador actualiza su estado.
-9. El cliente consulta el estado desde Mis pedidos.
+Working end to end and deployed. Not done yet: automated tests, rate limiting,
+refresh tokens, and a product image upload (images are linked by name today).

@@ -3,6 +3,9 @@ name: Desplegar en Lightsail
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
   workflow_dispatch:
 
 concurrency: deploy
